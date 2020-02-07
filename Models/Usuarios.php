@@ -54,7 +54,6 @@ class Usuarios extends Model {
 
             $_SESSION['lgsocial'] = $this->pdo->lastInsertId();
 
-            print_r($_SESSION['lgsocial']);
 
             header("Location: ".BASE_URL);
             exit;
@@ -103,5 +102,24 @@ class Usuarios extends Model {
             $sql = $this->pdo->query($sql);
         }
         
+    }
+
+    public function getSugestoes($limit = 2){
+        $array = array();
+        
+        $sql = $this->pdo->prepare("SELECT usuarios.id, usuarios.nome 
+        FROM usuarios
+        WHERE usuarios.id != :meuid 
+        ORDER BY RANDOM() 
+        LIMIT $limit" );
+
+        $sql->bindValue(":meuid", $_SESSION['lgsocial']);
+        $sql->execute();
+
+        if($sql->rowCount() > 0){
+            $array = $sql->fetchAll();
+        }
+
+        return $array;
     }
 }
