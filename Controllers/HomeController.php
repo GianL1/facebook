@@ -6,6 +6,7 @@ use \Core\Controller;
 use \Models\Usuarios;
 use \Models\Relacionamentos;
 use \Models\Posts;
+use \Models\Grupos;
 
 class HomeController extends Controller {
 
@@ -18,6 +19,7 @@ class HomeController extends Controller {
         $u = new Usuarios();
         $r = new Relacionamentos();
         $p = new Posts();
+        $g = new Grupos();
 
         $dados = array(
             'usuario_nome' => ''
@@ -38,11 +40,17 @@ class HomeController extends Controller {
             $p->addPost($postmsg, $foto);
         }
 
+        if(isset($_POST['grupo']) && !empty($_POST['grupo'])) {
+            $grupo = addslashes($_POST['grupo']);
+            $id_grupo = $g->criar($grupo);
+            header("Location: ".BASE_URL."grupos/abrir/".$id_grupo); 
+        }
         
         $dados['sugestoes'] = $u->getSugestoes(3);
         $dados['requisicoes'] = $r->getRequisicoes();
         $dados['totalamigos'] = $r->getTotalAmigos();
         $dados['feed'] = $p->getFeed();
+        $dados['grupos'] = $g->getGrupos();
         
         
         
