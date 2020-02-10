@@ -2,6 +2,7 @@
 namespace Models;
 
 use \Core\Model;
+use \Models\Relacionamentos;
 
 class Usuarios extends Model {
 
@@ -106,10 +107,18 @@ class Usuarios extends Model {
 
     public function getSugestoes($limit = 2){
         $array = array();
+
+        $r = new Relacionamentos();
+        $ids = $r->getIdsFriends();
+
+        if(count($ids) > 0) {
+            $ids[] = $_SESSION['lgsocial'];
+        }
         
         $sql = $this->pdo->prepare("SELECT usuarios.id, usuarios.nome 
         FROM usuarios
-        WHERE usuarios.id != :meuid 
+        WHERE usuarios.id != :meuid AND
+        usuarios.id NOT IN (".implode(',', $ids).")
         ORDER BY RANDOM() 
         LIMIT $limit" );
 
@@ -121,5 +130,12 @@ class Usuarios extends Model {
         }
 
         return $array;
+    }
+
+    public function addFriend($id1, $id2){
+        $sql = $this->pdo->prepare("INSERT INTO relacionamentos(usuario_de,usuario_para, status) VALUES(:id1,:id2, 0)");
+        $sql->bindValue(":id1", $id1);
+        $sql->bindValue(":id2", $id2);
+        $sql->execute();
     }
 }

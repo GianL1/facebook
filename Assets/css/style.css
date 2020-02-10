@@ -7,3 +7,20 @@
     height: 40px;
     line-height: 40px;
 }
+.post_area {
+    border-bottom: 1px solid #ccc;
+}
+.post_area textarea{
+    height: 100px;
+}
+.postitem{
+    border-bottom: 1px #ccc;
+}
+.postitem_texto{
+    background-color: #EEE;
+    padding: 10px;
+}
+.postitem_comentario{
+    display: none;
+    
+}
