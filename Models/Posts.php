@@ -6,7 +6,7 @@ use \Models\Relacionamentos;
 
 class Posts extends Model {
 
-    public function addPost($msg, $foto){
+    public function addPost($msg, $foto, $id_grupo = 0){
         $tipo = 'foto';
         $url = '';
         if(count($foto) > 0) {
@@ -31,15 +31,16 @@ class Posts extends Model {
             }
         }
         
-        $sql = $this->pdo->prepare("INSERT INTO posts(id_usuario,data_criacao,tipo,texto,id_grupo,url) VALUES(:id_usuario,NOW(),:tipo,:msg,1,:url)");
+        $sql = $this->pdo->prepare("INSERT INTO posts(id_usuario,data_criacao,tipo,texto,id_grupo,url) VALUES(:id_usuario,NOW(),:tipo,:msg,:id_grupo,:url)");
         $sql->bindValue(":id_usuario", $_SESSION['lgsocial']);
+        $sql->bindValue(":id_grupo", $id_grupo);
         $sql->bindValue(":msg" , $msg);
         $sql->bindValue(":tipo" , $tipo);
         $sql->bindValue(":url" , $url);
         $sql->execute();
     }
 
-    public function getFeed(){
+    public function getFeed($id_grupo = 0){
         $array = array();
 
         $r = new Relacionamentos();
@@ -50,8 +51,9 @@ class Posts extends Model {
         (select usuarios.nome from usuarios where usuarios.id = posts.id_usuario) as nome,
         (select count(*) from post_likes where post_likes.id_post = posts.id ) as likes,
         (select count(*) from post_likes where post_likes.id_post = posts.id AND post_likes.id_usuario = :id_usuario  ) as liked
-         FROM posts WHERE id_usuario IN('.implode(',',$ids).') ORDER BY data_criacao DESC');
+         FROM posts WHERE id_usuario IN('.implode(',',$ids).') AND id_grupo = :id_grupo');
          $sql->bindValue(":id_usuario", $_SESSION['lgsocial']);
+         $sql->bindValue(":id_grupo", $id_grupo);
          $sql->execute();
         
 

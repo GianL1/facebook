@@ -65,7 +65,7 @@
                     </div>
                 </form>
                 <?php foreach($grupos as $grupo) : ?>
-                    <a href="<?php echo BASE_URL;?>grupos/abrir/<?php $grupo['id']; ?>"><?php echo $grupo['titulo']; ?></a>
+                    <a href="<?php echo BASE_URL;?>grupos/abrir/<?php echo $grupo['id']; ?>"><?php echo $grupo['titulo']; ?></a>
                 <?php endforeach; ?>
         </div>
     </div>
