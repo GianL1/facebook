@@ -24,6 +24,13 @@
       <li class="nav-item active">
         <a class="nav-link" href="<?php echo BASE_URL; ?>">Rede Social <span class="sr-only">(current)</span></a>
       </li>
+      <form method="GET" action="<?php echo BASE_URL;?>busca" class="navbar-form navbar-left navbar-input-group">
+          <div class="form-group">
+              <input type="text" name="q" class="form-control" placeholder="Buscar">
+          </div>
+          <button type="submit" class="btn btn-primary">Buscar</button>
+          
+      </form>
       
       <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

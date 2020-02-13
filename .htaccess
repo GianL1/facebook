@@ -1,4 +1,4 @@
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /php/facebook/index.php?url=$1 [L]
+RewriteRule ^(.*)$ /php/facebook/index.php?url=$1 [QSA,PT,L]

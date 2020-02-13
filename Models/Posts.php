@@ -7,7 +7,7 @@ use \Models\Relacionamentos;
 class Posts extends Model {
 
     public function addPost($msg, $foto, $id_grupo = 0){
-        $tipo = 'foto';
+        $tipo = 'texto';
         $url = '';
         if(count($foto) > 0) {
             $tipos = array('image/jpg', 'image/png,', 'image/jpeg');

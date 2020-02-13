@@ -26,6 +26,7 @@ class HomeController extends Controller {
         );
 
         
+        
         $dados['usuario_nome'] = $u->getNome($_SESSION['lgsocial']);
 
         if(isset($_POST['post']) && !empty($_POST['post'])) {
@@ -55,5 +56,7 @@ class HomeController extends Controller {
         
         
         $this->loadTemplate('home', $dados);
+
+ 
     }
 }

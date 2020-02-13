@@ -138,4 +138,19 @@ class Usuarios extends Model {
         $sql->bindValue(":id2", $id2);
         $sql->execute();
     }
+
+    public function procurar($q){
+        $array = array();
+
+        $q = addslashes($q);
+
+        $sql = $this->pdo->query("SELECT * FROM usuarios WHERE nome LIKE '%$q%'");
+
+        if($sql->rowCount() > 0)
+        {
+            $array = $sql->fetchAll();
+        }
+
+        return $array;
+    }
 }
